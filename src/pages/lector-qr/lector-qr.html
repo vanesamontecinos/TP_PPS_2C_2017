@@ -14,14 +14,13 @@
       <ion-icon name="qr-scanner"></ion-icon>
     </button>
   </div>
-  <ion-card>
-  <ul>
-    <li *ngIf="this.mostrarInfo">
-      {{ this.aula }}
-      {{ this.materia }}
-      {{ this.info }}
+ 
+    <div class="fondo" *ngIf="this.mostrarInfo">
+      <h1>{{ this.aula }}</h1>
+      <h2>{{ this.materia }}</h2>
+         
+     <h2> {{ this.info }}</h2>
     
-    </li>
-  </ul>
-</ion-card>
+    </div>
+ 
 </ion-content>

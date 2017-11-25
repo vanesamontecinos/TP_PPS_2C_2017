@@ -68,7 +68,13 @@ export class RealizarEncuestaPage {
     console.log("guardar respuesta");
     console.log(value);
     this.respuesta=value;
-    alert("respuesta Guardada");
+    let alert = this.alertCtrl.create({
+      title: 'Encuesta Terminada!',
+      subTitle: 'Se envio la respuesta correctamente!',
+      buttons: ['OK']
+  });
+  alert.present();
+
     //this.Unalista=this.afDB.list('Respuestas/'+this.tituloSeleccionado+'/'+this.respuesta);
     this.Unalista=this.afDB.list('Respuestas/'+this.tituloSeleccionado);
     this.Unalista.push({res:this.respuesta});
@@ -83,11 +89,21 @@ export class RealizarEncuestaPage {
     if (this.respuestaTexto!=''){
       this.Unalista=this.afDB.list('Respuestas/'+this.tituloSeleccionado);
       this.Unalista.push({res:this.respuestaTexto});
-      alert("respuesta Guardada");
+      let alert = this.alertCtrl.create({
+        title: 'Encuesta Terminada!',
+        subTitle: 'Se envio la respuesta correctamente!',
+        buttons: ['OK']
+    });
+    alert.present();
       this.navCtrl.push(BotonesPage);
     }
     else{
-      alert('No ingreso respuesta');
+      let alert = this.alertCtrl.create({
+        title: 'ERROR!',
+        subTitle: 'No se ingreso respuesta!',
+        buttons: ['OK']
+    });
+    alert.present();
     }
   }
 

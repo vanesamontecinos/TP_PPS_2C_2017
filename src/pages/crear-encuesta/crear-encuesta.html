@@ -45,7 +45,7 @@
           
           <ion-item>
               <ion-label>Desde</ion-label>
-              <ion-datetime displayFormat="MM/DD/YYYY" pickerFormat="YYYY MMM DD"  formControlName="fecha"  [(ngModel)]="laencuesta.Fecha"></ion-datetime>
+              <ion-datetime displayFormat="MM/DD/YYYY" min="2017-11-24" max="2020-10-31" pickerFormat="YYYY MMM DD"  formControlName="fecha"  [(ngModel)]="laencuesta.Fecha"></ion-datetime>
             </ion-item>
              
               <button 

@@ -18,6 +18,7 @@
         <!--Loop trough picture array here we use preserveSnapshot:true but I think we can also use async pipe with FirebaseListObservable-->
        
           <ion-spinner></ion-spinner>
+          <div class="centrado">
         <ion-list *ngFor="let picture of userAvatarPicture;let i = index;">   
             <!--p [hidden]='i+1'></p>
             <div *ngIf="i % 2 >0">
@@ -42,7 +43,7 @@
         </button>
         </div>
       </ion-list>
-    
+    </div>
       
 
 </ion-content>

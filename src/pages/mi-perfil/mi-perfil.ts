@@ -31,18 +31,7 @@ export class MiPerfilPage {
         this.refreshPicture();
 
 
-       this.afDB.list('/Usuarios/').subscribe(e=>{
-        e.forEach(res=>{
-           this.algo.push(res);
-           console.log('res'+res);
-          
-        })
-        this.algo.forEach(element => {
-          console.log('elem'+element.foto); 
-          console.log('elem'+element.usuario); 
-           });
        
-     });
      }
 
 

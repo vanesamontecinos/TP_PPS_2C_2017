@@ -1,0 +1,60 @@
+<!--
+  Generated template for the GraficoFaltasPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>graficoFaltas</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+    <div *ngIf="mostrarGraficos==false">
+        
+         
+                     <button 
+                     ion-button 
+                     (click)="Seleccionar('4A')" 
+                     type="submit" 
+                     color="primary" 
+                     block
+                 >
+                   4A Ver Estadisticas
+                  </button> 
+                  <button 
+                  ion-button 
+                  (click)="Seleccionar('4B')" 
+                  type="submit" 
+                  color="primary" 
+                  block
+              >
+                4B Ver Estadisticas
+               </button>
+                
+         </div>
+  <div class="fondo" *ngIf="mostrarGraficos">
+    
+      <div style="display: block ">
+        <canvas baseChart height="140"
+                [datasets]="ChartData1"
+                [labels]="ChartLabels1"
+                [options]="ChartOptions1"
+                [legend]="ChartLegend"
+                [chartType]="ChartType1"
+                (chartHover)="chartHovered($event)"
+                (chartClick)="chartClicked($event)"></canvas>
+      </div>
+
+    <canvas baseChart width="200" height="200"
+    [options]="ChartOptions2"
+    [datasets]="ChartData2"
+    [labels]="ChartLabels2"
+    [legend]="ChartLegend"
+    [chartType]="ChartType2"></canvas>
+  </div>
+</ion-content>

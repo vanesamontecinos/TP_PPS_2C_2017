@@ -87,7 +87,7 @@ Aula(dato:number){
   this.aula=JSON.stringify(dato);
   if (dato==310){
     this.division='4A'
-    if ((d.getDay()==3)&&(d.getHours()<14))
+    if ((d.getDay()==6)&&(d.getHours()<14))
     {
       this.materia='PPS';
       this.mostrarListado=true;
@@ -97,7 +97,7 @@ Aula(dato:number){
   }
   if (dato==305){
     this.division='4B'
-    if ((d.getDay()==3)&&(d.getHours()<20))
+    if ((d.getDay()==6)&&(d.getHours()<20))
     {
       this.materia='PPS';
       this.mostrarListado=true;
@@ -255,17 +255,16 @@ Aula(dato:number){
       listaE.forEach(student =>
       {
         console.log(student.present);
-        if (student.present)
-        {
+      
           this.unalista=this.afDB.list('Lista/'+this.division+'/'+this.materia+'/'+this.aula+'/'+datePipe);
-        
-
          this.unalista.push({legajo:student.userid,apellido:student.lastname,nombre:student.firstname,presente:student.present});
-          this.unalista=this.afDB.list('Alumnos/'+student.userid+'/'+this.materia+'/presente');
-          this.unalista.push(1);
+          this.unalista=this.afDB.list('Alumnos/'+student.userid+'/'+this.materia);
+          this.unalista.push({presente:student.present});
+          this.unalista=this.afDB.list('TotalFaltas/'+this.division+'/'+this.materia);
+          this.unalista.push({presente:student.present});
           console.log(student.firstname);
           console.log("porguardar");
-        }
+        /*
         else if (student.present==false){
          // this.Unalista=this.afDB.list('Lista/'+this.division+'/'+this.materia+'/'+this.aula+'/'+student.lastname+'/ausente');
           //this.Unalista=this.afDB.list('Lista/Matematica/'+student.firstname+'/ausente');
@@ -273,13 +272,18 @@ Aula(dato:number){
           this.unalista.push({legajo:student.userid,apellido:student.lastname,nombre:student.firstname,presente:student.present});
           this.unalista=this.afDB.list('Alumnos/'+student.userid+'/'+this.materia+'/ausente');
           this.unalista.push(1);
-        }
+        }*/
       })
     }
     this.listaEstudiantes2=null;
     this.listadoAlumnos=null;
     
-    alert("Los datos Fueron guardados Correctamente");
+    let alert = this.alertCtrl.create({
+      title: 'Nota',
+      subTitle: 'Los datos han sido guardados correctamente',
+      buttons: ['OK']
+  });
+  alert.present();
     this.navCtrl.push(BotonesPage);
       
   }

@@ -34,6 +34,7 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ChartsModule } from 'ng2-charts';
+import { GraficoFaltasPage } from '../pages/grafico-faltas/grafico-faltas';
 
 //csv
 import { ListadoAlumnosPage } from '../pages/listado-alumnos/listado-alumnos';
@@ -82,7 +83,8 @@ export const firebaseConfig = {
     EstadisticasPage,
     ModalAlumnoPage,
     ModalAdministrativoPage,
-    ModalProfesorPage
+    ModalProfesorPage,
+    GraficoFaltasPage
   ],
   imports: [
     BrowserModule,
@@ -112,7 +114,8 @@ export const firebaseConfig = {
     RealizarEncuestaPage,
     EstadisticasPage,
     ModalAdministrativoPage,
-    ModalProfesorPage
+    ModalProfesorPage,
+    GraficoFaltasPage
     
   ],
   providers: [

@@ -9,6 +9,7 @@ import { CrearEncuestaPage } from '../crear-encuesta/crear-encuesta';
 import { RealizarEncuestaPage } from '../realizar-encuesta/realizar-encuesta';
 import { ListadoAlumnosPage } from '../listado-alumnos/listado-alumnos';
 import { EstadisticasPage } from '../estadisticas/estadisticas';
+import { GraficoFaltasPage } from '../grafico-faltas/grafico-faltas';
 
 import { IonicPage,NavController, NavParams,AlertController } from 'ionic-angular';
 import { AuthService } from '../../services/auth.service';
@@ -59,6 +60,9 @@ usuario:string;
     case "Estadisticas":
         this.navCtrl.push(EstadisticasPage);
           break;
+    case "EstadisticasFaltas":
+          this.navCtrl.push(GraficoFaltasPage);
+           break;
     case "Lista":
           this.navCtrl.push(ListadoAlumnosPage);
             break;

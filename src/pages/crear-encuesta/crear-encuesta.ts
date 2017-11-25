@@ -35,7 +35,7 @@ export class CrearEncuestaPage {
   fecha:any;
   Fecha:any;
   laencuesta:Encuesta;
-  constructor(public navCtrl: NavController, public navParams: NavParams,
+  constructor(public navCtrl: NavController, public navParams: NavParams,public alertCtrl : AlertController,
     public afDB: AngularFireDatabase, private fb: FormBuilder, ) {
     this.mostrarForm=true;
 
@@ -53,7 +53,12 @@ this.laencuesta=new Encuesta();
     console.log('ionViewDidLoad CrearEncuestaPage');
   }
   guardarEncuesta(){
-    alert("La encuesta ha sido Guardada");
+    let alert = this.alertCtrl.create({
+      title: 'Felicitaciones',
+      subTitle: 'La encuesta ha sido guardada con exito!',
+      buttons: ['OK']
+  });
+  alert.present();
     console.log(this.encuesta);
     this.navCtrl.push(BotonesPage);
 
@@ -61,6 +66,14 @@ this.laencuesta=new Encuesta();
   continuar(){
     if (this.form.valid){
       this.mostrarForm=false;
+    }
+    else{
+      let alert = this.alertCtrl.create({
+        title: 'Atencion',
+        subTitle: 'Complete los campos vacios',
+        buttons: ['OK']
+    });
+    alert.present();
     }
     
   }
@@ -74,7 +87,12 @@ this.laencuesta=new Encuesta();
     this.Unalista.push({titulo:this.form.value.titulo,pregunta:this.form.value.pregunta,fecha:this.form.value.fecha,opcion:this.opcion});
    // this.Unalista=this.afDB.list('Respuestas/'+this.tituloSeleccionado+'/total');
     //this.Unalista.push(1);
-    alert("La encuesta ha sido Guardada");
+    let alert = this.alertCtrl.create({
+      title: 'Felicitaciones',
+      subTitle: 'La encuesta ha sido guardada con exito!',
+      buttons: ['OK']
+  });
+  alert.present();
     console.log(this.form);
     this.navCtrl.push(BotonesPage);
 
