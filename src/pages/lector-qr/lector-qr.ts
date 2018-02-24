@@ -19,11 +19,12 @@ import { EstadisticasPage } from '../estadisticas/estadisticas';
 })
 export class LectorQrPage {
 
-  codigo:string="";
+  //codigo:string="";
   mostrarInfo=true;
   aula:string;
   materia:string;
   info:string;
+  encontrado:boolean;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     private barcodeScanner: BarcodeScanner,public auth:AuthProvider, public alertCtrl : AlertController,) {
@@ -35,13 +36,35 @@ export class LectorQrPage {
   }
 async leerCodigo(){
   let codigo='';
+  this.encontrado=false;
   const result = await this.barcodeScanner.scan({showTorchButton: true});
   codigo = await result.text;
   this.realizarAccion(codigo);}
   //this.scannedCodes.push(this.scannedCode);
 
   realizarAccion(code:string){
-  if (code=="8c95def646b6127282ed50454b73240300dccabc​"){
+    this.mostrarInfo=false;
+    //alert(code);
+  if (code=="http://en.qrwp.org/Saraswati"){
+    this.encontrado=true;
+  { if(this.auth.getUser()=="profesor@profesor.com"){
+    let alert = this.alertCtrl.create({
+      title: 'ERROR!',
+      subTitle: 'Usted es profesor, no tiene autorizacion para leer el codigo!',
+      buttons: ['OK']
+  });
+  alert.present();
+
+  }
+  if(this.auth.getUser()=="alumno@alumno.com"){
+    this.mostrarInfo=true;
+    this.aula="Aula 315";
+    this.materia="Programacion";
+    this.info= "Profesor: Juancito  proximo parcial: 15/12/2017";
+  }
+}}
+if (code=="2786f4877b9091dcad7f35751bfcf5d5ea712b2f"){
+  this.encontrado=true;
   { if(this.auth.getUser()=="profesor@profesor.com"){
     let alert = this.alertCtrl.create({
       title: 'ERROR!',
@@ -58,7 +81,8 @@ async leerCodigo(){
     this.info= "Profesor: Pepito  proximo parcial: 8/12/2017";
   }
 }}
-if (code=="ae338e4e0cbb4e4bcffaf9ce5b409feb8edd5172​"){
+if (code=="http://www.qrstuff.com/"){
+  this.encontrado=true;
   { if(this.auth.getUser()=="alumno@alumno.com"){
     let alert = this.alertCtrl.create({
       title: 'ERROR!',
@@ -75,7 +99,26 @@ if (code=="ae338e4e0cbb4e4bcffaf9ce5b409feb8edd5172​"){
     this.info= "Cantidad de alumnos 56 , proximo parcial: 8/12/2017";
   }
 }}
-if (code=="2786f4877b9091dcad7f35751bfcf5d5ea712b2f"){
+if (code=="http://apod.nasa.gov/"){
+  this.encontrado=true;
+  { if(this.auth.getUser()=="alumno@alumno.com"){
+    let alert = this.alertCtrl.create({
+      title: 'ERROR!',
+      subTitle: 'Usted es alumno, no tiene autorizacion para leer el codigo!',
+      buttons: ['OK']
+  });
+  alert.present();
+
+  }
+  if(this.auth.getUser()=="profesor@profesor.com"){
+    this.mostrarInfo=true;
+    this.aula="Aula 310";
+    this.materia="Sistemas";
+    this.info= "Cantidad de alumnos 15 , proximo parcial: 10/12/2017";
+  }
+}}
+if (code=="http://seati.ms/LaNina2010?r=qr"){
+  this.encontrado=true;
   { if(this.auth.getUser()=="alumno@alumno.com"){
     let alert = this.alertCtrl.create({
       title: 'QR ENCUESTA!',
@@ -96,6 +139,15 @@ if (code=="2786f4877b9091dcad7f35751bfcf5d5ea712b2f"){
   this.navCtrl.push(EstadisticasPage);
   }
 }}
+if(this.encontrado==false){
+  let alert = this.alertCtrl.create({
+    title: 'ERROR!',
+    subTitle: 'No se encontro el codigo ingresado!',
+    buttons: ['OK']
+});
+alert.present();
+code='';
+}
 
 }
 }

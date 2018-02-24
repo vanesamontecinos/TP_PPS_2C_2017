@@ -54,6 +54,7 @@ public ChartLabels2:string[];
 public i:number=0;
 public lis:Array<any>;
 
+
 //listcodigos: FirebaseListObservable<any>;
 listaCuestionarios:FirebaseListObservable<any>;
 unaLista:FirebaseListObservable<any>;
@@ -64,6 +65,7 @@ mostrarencuestas:boolean;
 mostrarGraficos:boolean;
 l:Observable<any>;
 listavacia =[];
+id:string='';
 
 
 constructor(public navCtrl: NavController, public navParams: NavParams,
@@ -76,7 +78,7 @@ constructor(public navCtrl: NavController, public navParams: NavParams,
     this.CargarListaCuestionarios();
     this.mostrarencuestas=true;
 
-    this.afDB.list('/Respuestas/').subscribe(e=>{
+    this.afDB.list('/encuestasRespuesta/').subscribe(e=>{
       e.forEach(res=>{
       })
       this.listavacia.forEach(element => {
@@ -88,17 +90,18 @@ constructor(public navCtrl: NavController, public navParams: NavParams,
 CargarListaCuestionarios()
 {
   this.listaEncuestas=new Array<any>(); 
-  this.afDB.list('Cuestionarios', { preserveSnapshot: true }).subscribe((snapshots: any) => {
+  this.afDB.list('encuestas', { preserveSnapshot: true }).subscribe((snapshots: any) => {
     snapshots.forEach((snapshot, index) => {
       this.lista[index] = snapshot.val();
       console.log(this.lista);
     });
   });  
 }
-Seleccionar(titulo:string,pregunta:string,opcion:string){
+Seleccionar(titulo:string,pregunta:string,opcion:string,key:string){
 this.unaEncuesta.nombre=titulo;
 this.unaEncuesta.pregunta=pregunta;
 this.unaEncuesta.opcion=opcion;
+this.id=key;
 this.mostrarencuestas=false;
 let MB:number=0;
 let B:number=0;
@@ -108,7 +111,7 @@ let Si:number=0;
 let No:number=0;
 let PS:number=0;
 
-this.afDB.list('/Respuestas/'+titulo+'/').subscribe(e=>{
+this.afDB.list('/encuestasRespuesta/'+key+'/').subscribe(e=>{
   e.forEach(res=>{
      this.listavacia.push(res);
      console.log('res'+this.listavacia);

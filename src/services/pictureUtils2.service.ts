@@ -49,7 +49,7 @@ export class PictureUtils2 {
   constructor(public afDB: AngularFireDatabase, public auth : AuthProvider,  public alertCtrl : AlertController) {
    // this.storageAvatarRef = firebase.storage().ref().child('userPicture/');//Firebase storage main path
      //this.profilAvatarRef = afDB.object('TEST/avatar/');//Firebase user database avatar path
-     this.profilAvatarRef = afDB.object('Usuarios/');//Firebase user database avatar path
+    // this.profilAvatarRef = afDB.object('Usuarios/');//Firebase user database avatar path
   }
 
   //Take a picture and return a promise with the image data
@@ -83,28 +83,33 @@ export class PictureUtils2 {
 
   //Upload a new profile picture to the firebase storage
   uploadProfilPicture(imgData: any) {
-    this.auth.getUser.name;
+    //this.auth.getUser.name;
     let foto;
     this.storageAvatarRef = firebase.storage().ref().child('fotos/');
-    this.lista=this.afDB.list('Usuarios/'+this.auth.getUserId()+'/');
+  //  this.lista=this.afDB.list('Usuarios/'+this.auth.getUserId()+'/foto');
   
     //Firebase user database avatar path
    
     var randomNumber = Math.floor(Math.random() * 2566);
-   // console.log('Random number : ' + randomNumber);
-
+    this.profilAvatarRef = this.afDB.object('Usuarios/algo/foto/');
+    alert(this.profilAvatarRef);
     this.storageAvatarRef.child(randomNumber + '.jpg').putString(imgData, 'base64', { contentType: 'image/jpeg' }).then((savedPicture) => {
-     // console.log('saved picture URL', savedPicture.downloadURL);
+    
 
       this.objectToSave.push(savedPicture.downloadURL);
-      this.unafoto=JSON.stringify(this.objectToSave);
-      alert(this.unafoto);
-      this.profilAvatarRef = this.afDB.object('Usuarios/'+this.auth.getUserId+'/foto/');//Firebase user database avatar path
-    //  console.log('objectToSave : ' + JSON.stringify(this.objectToSave));
-    //this.profilAvatarRef = this.afDB.object('nada/');
-     // this.lista.update(foto,this.objectToSave);
-     // this.lista. .set({foto:this.objectToSave});
       
+      alert(this.objectToSave);
+      //alert(this.auth.getUserId());
+     // this.profilAvatarRef = this.afDB.object('Usuarios/'+this.auth.getUserId+'/foto/');//Firebase user database avatar path
+    //  console.log('objectToSave : ' + JSON.stringify(this.objectToSave));
+
+     // this.lista.update(foto,this.objectToSave);
+     // this.lista.update(0,this.objectToSave);
+     // const items = this.afDB.list('Usuarios/'+this.auth.getUserId()+'/foto');
+      /*items.subscribe(list => {
+        const item = list[0];
+        items.update(item, { 0: this.objectToSave });
+      });*/
       //.push({foto:this.objectToSave,usuario:this.auth.getUser()});
       this.profilAvatarRef.set(this.objectToSave);
       

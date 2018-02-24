@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title><span *ngIf="nuevo">Nuevo Alumno</span><span *ngIf="!nuevo">Modificar {{alumno.nombre}}</span></ion-title>
+    <ion-title><span *ngIf="nuevo">{{ 'Nuevo Alumno' | translate }}</span><span *ngIf="!nuevo">{{ 'Modificar' | translate }} {{alumno.nombre}}</span></ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -16,37 +16,58 @@
 <ion-content padding>
 
     <ion-list>
-        <ion-list-header>Datos del Alumno</ion-list-header>
+        <ion-list-header> {{ 'Datos del Alumno' | translate }}</ion-list-header>
           <ion-item>
-            <ion-label floating>Nombre</ion-label>
+            <ion-label floating>{{ 'Nombre' | translate }}</ion-label>
             <ion-input [(ngModel)]="alumno.nombre" type="text"></ion-input>
           </ion-item>
         
           <ion-item>
-            <ion-label floating>Apellido</ion-label>
+            <ion-label floating>{{ 'Apellido' | translate }}</ion-label>
             <ion-input [(ngModel)]="alumno.apellido" type="text"></ion-input>
           </ion-item>
 
           <ion-item>
-              <ion-label floating>Legajo</ion-label>
+              <ion-label floating>{{ 'Legajo' | translate }}</ion-label>
               <ion-input [(ngModel)]="alumno.legajo" type="number"></ion-input>
             </ion-item>
 
+            <ion-item>
+                <ion-label floating>{{ 'Dirección' | translate }}</ion-label>
+                <ion-input [(ngModel)]="alumno.direccion" type="text"></ion-input>
+          </ion-item>
+
+          <ion-list radio-group [(ngModel)]="alumno.turno">
+              <ion-list-header>
+                {{ 'Turno' | translate }}
+              </ion-list-header>
+            
+              <ion-item>
+                <ion-label>{{ 'Mañana' | translate }}</ion-label>
+                <ion-radio checked="true" value="mañana"></ion-radio>
+              </ion-item>
+            
+              <ion-item>
+                <ion-label>{{ 'Tarde' | translate }}</ion-label>
+                <ion-radio value="tarde"></ion-radio>
+              </ion-item>
+            </ion-list>
+
             <ion-list-header>
-                Horario
+                {{ 'Horario' | translate }}
               </ion-list-header>
             <ion-item>
-                <ion-label>Desde</ion-label>
+                <ion-label>{{ 'Desde' | translate }}</ion-label>
                 <ion-datetime displayFormat="H:mm" pickerFormat="H mm" [(ngModel)]="alumno.horarioInicio"></ion-datetime>
               </ion-item>
 
               <ion-item>
-                  <ion-label>Hasta</ion-label>
+                  <ion-label>{{ 'Hasta' | translate }}</ion-label>
                   <ion-datetime displayFormat="H:mm" pickerFormat="H mm" [(ngModel)]="alumno.horarioFin"></ion-datetime>
                 </ion-item>
         </ion-list>
 
-        <button ion-button round outline color="secondary" (click)="Aceptar()">Confirmar</button>
-        <button ion-button round outline color="danger" (click)="Cerrar()">Cancelar</button>
+        <button ion-button round outline color="secondary" (click)="Aceptar()">{{ 'Confirmar' | translate }}</button>
+        <button ion-button round outline color="danger" (click)="Cerrar()">{{ 'Cancelar' | translate }}</button>
 
 </ion-content>

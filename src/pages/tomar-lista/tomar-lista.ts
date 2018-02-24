@@ -9,6 +9,8 @@ import { Estudiante } from "../../app/clases/estudiante";
 import { DatePipe } from '@angular/common';
 import { Http } from '@angular/http';
 import * as papa from 'papaparse';
+import * as firebase from 'firebase';
+
 
 
 @Component({
@@ -87,7 +89,7 @@ Aula(dato:number){
   this.aula=JSON.stringify(dato);
   if (dato==310){
     this.division='4A'
-    if ((d.getDay()==6)&&(d.getHours()<14))
+    if ((d.getDay()<7)&&(d.getHours()<24))
     {
       this.materia='PPS';
       this.mostrarListado=true;
@@ -97,7 +99,7 @@ Aula(dato:number){
   }
   if (dato==305){
     this.division='4B'
-    if ((d.getDay()==6)&&(d.getHours()<20))
+    if ((d.getDay()<8)&&(d.getHours()<20))
     {
       this.materia='PPS';
       this.mostrarListado=true;
@@ -178,7 +180,8 @@ Aula(dato:number){
       let d =new Date();
       if (d.getMonth()>7){ cuatrimestre='2c'; }
       if (d.getMonth()<=7){ cuatrimestre='1c'; }
-    let texto ='assets/'+this.materia+'-'+this.division+'-'+cuatrimestre+d.getFullYear()+'.csv';
+      let texto ='assets/'+'PPS-'+this.division+'-2c2017.csv';
+    //let texto ='assets/'+this.materia+'-'+this.division+'-'+cuatrimestre+d.getFullYear()+'.csv';
     console.log(texto);
       this.http.get(texto)
       .subscribe(
@@ -249,30 +252,38 @@ Aula(dato:number){
 
   GuardarPresente2(listaE: Array<Estudiante>){
     let datePipe = this.datePipeCtrl.transform(Date.now(), 'dd-MM-yyyy');
-
-
     if (listaE.length > 0) {
       listaE.forEach(student =>
       {
         console.log(student.present);
-      
-          this.unalista=this.afDB.list('Lista/'+this.division+'/'+this.materia+'/'+this.aula+'/'+datePipe);
-         this.unalista.push({legajo:student.userid,apellido:student.lastname,nombre:student.firstname,presente:student.present});
-          this.unalista=this.afDB.list('Alumnos/'+student.userid+'/'+this.materia);
-          this.unalista.push({presente:student.present});
-          this.unalista=this.afDB.list('TotalFaltas/'+this.division+'/'+this.materia);
+         // this.unalista=this.afDB.list('Lista/'+this.division+'/'+this.materia+'/'+this.aula+'/'+datePipe);
+        // this.unalista=this.afDB.list('Lista/'+this.division+'/'+this.materia+'/'+this.aula+'/'+datePipe+'/'+student.userid);
+        var postData = {
+          legajo:student.userid,
+          apellido:student.lastname,
+          nombre:student.firstname,
+          presente:student.present
+           
+         };
+        var updates = {};
+         updates['Lista/'+this.division+'/'+this.materia+'/'+this.aula+'/'+datePipe+'/'+student.userid] = postData;
+          firebase.database().ref().update(updates);
+
+          var postData2 = {
+            presente:student.present,  
+           };
+           var updates2 = {};
+           updates2['AlumnoFaltas'+'/'+this.materia+'/'+student.userid+'/'+datePipe] = postData2;
+ 
+            firebase.database().ref().update(updates2);
+
+         //this.unalista=this.afDB.list('AlumnoFaltas/'+student.userid);
+       //  this.unalista.push({presente:student.present, fecha:datePipe});
+         this.unalista=this.afDB.list('TotalFaltas/'+this.division+'/'+this.materia);
           this.unalista.push({presente:student.present});
           console.log(student.firstname);
           console.log("porguardar");
-        /*
-        else if (student.present==false){
-         // this.Unalista=this.afDB.list('Lista/'+this.division+'/'+this.materia+'/'+this.aula+'/'+student.lastname+'/ausente');
-          //this.Unalista=this.afDB.list('Lista/Matematica/'+student.firstname+'/ausente');
-          this.unalista=this.afDB.list('Lista/'+this.division+'/'+this.materia+'/'+this.aula+'/'+datePipe);
-          this.unalista.push({legajo:student.userid,apellido:student.lastname,nombre:student.firstname,presente:student.present});
-          this.unalista=this.afDB.list('Alumnos/'+student.userid+'/'+this.materia+'/ausente');
-          this.unalista.push(1);
-        }*/
+
       })
     }
     this.listaEstudiantes2=null;

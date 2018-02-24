@@ -1,0 +1,109 @@
+
+<ion-header>
+  
+    <ion-navbar>
+      <ion-title>{{ 'Completar Encuesta' | translate }} </ion-title>
+    </ion-navbar>
+  
+  </ion-header>
+  
+  
+  <ion-content padding>
+    <div *ngIf="mostrarTodas">
+    
+      <ion-list *ngFor="let item of unaLista;let i = index;">   
+     
+          <div *ngIf="item.fecha>this.date">
+              <div *ngIf="item.eliminada==false">
+          <ion-item>
+          <div>
+              <h1 > {{ 'Titulo' | translate }}  {{item.titulo}}</h1>
+              <h2 > {{ 'Pregunta' | translate }} : {{item.pregunta}}</h2>
+              <h2>{{ 'finaliza el dia' | translate }}  {{item.fecha}}</h2>
+              <button 
+              ion-button 
+              (click)="Seleccionar(item.titulo,item.pregunta,item.opcion,item.key,item.fecha)" 
+              type="submit" 
+              color="primary" 
+              block
+          >
+            {{ 'Seleccionar Encuesta' | translate }} 
+           </button> 
+           <button 
+           ion-button 
+           (click)="eliminar(item.titulo,item.pregunta,item.opcion,item.key,item.fecha)" 
+           type="submit" 
+           color="primary" 
+           block
+       >
+         {{ 'Eliminar' | translate }} 
+        </button> 
+          </div>
+        </ion-item>
+      </div>
+    </div>
+    </ion-list>
+  </div>
+  
+  <div *ngIf="mostrarEncuesta">
+ 
+  <div *ngIf="mostrarForm">
+    <form [formGroup]="form" padding>
+        <p></p>
+        <h2 class="royal"> {{ 'Titulo de la Encuesta' | translate }} </h2> 
+
+    
+        <ion-item>
+          <ion-input 
+            [(ngModel)]="this.tituloSeleccionado" 
+            formControlName="titulo" 
+            type="text" 
+            autocapitalize="off" 
+            required
+          >
+          </ion-input>
+        </ion-item>
+        <h2 class="royal"> {{ 'Cargar Pregunta' | translate }} </h2> 
+        <ion-item>
+            
+      
+        <ion-input 
+          [(ngModel)]="this.preguntaSeleccionada" 
+          formControlName="pregunta" 
+          type="text" 
+          autocapitalize="off" 
+          required
+        >
+        </ion-input>
+      </ion-item>
+      <h2 class="royal"> {{ 'Fecha Finalizacion' | translate }} </h2> 
+      
+      <ion-item>
+          <ion-label>{{ 'Hasta' | translate }} </ion-label>
+          <ion-datetime displayFormat="MM/DD/YYYY" min="2017-11-24" max="2020-10-31" pickerFormat="YYYY MMM DD"  formControlName="fecha"  [(ngModel)]="this.unafecha"></ion-datetime>
+        </ion-item>
+
+
+          <button 
+      ion-button 
+      (click)="GuardarCambios()" 
+      type="submit" 
+      color="primary" 
+      block
+  >
+    {{ 'Continuar' | translate }} 
+   </button>
+  </form>
+  </div>
+
+
+  
+  
+  
+  
+  
+  </div>
+  
+  
+  </ion-content>
+  

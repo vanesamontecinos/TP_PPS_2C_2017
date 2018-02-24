@@ -79,6 +79,7 @@ export class MiPerfilPage {
         ]
       });
       actionSheet.present();
+      this.refreshPicture();
       
     } 
     

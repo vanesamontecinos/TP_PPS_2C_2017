@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>MiPerfil</ion-title>
+    <ion-title>{{ 'Mi Perfil' | translate }}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -31,14 +31,14 @@
           <img  width="300" src="{{picture.foto}}" />
         </ion-item>
       <ion-item>
-          Nombre: {{picture.nombre}}
+          {{ 'Nombre' | translate }}: {{picture.nombre}}
         </ion-item>
       <ion-item>
-          E-mail: {{picture.usuario}}
+          {{ 'E-mail' | translate }}: {{picture.usuario}}
         </ion-item>
      
       <button ion-button icon-right color="dark" (click)="changePicture()">
-          Cambiar Foto
+          {{ 'Cambiar Foto' | translate }}
           <ion-icon name="images"></ion-icon>
         </button>
         </div>

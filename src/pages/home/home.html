@@ -1,7 +1,7 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-     Listado de FOTOS
+      {{ 'Listado de Fotos' | translate }} 
     </ion-title>
   </ion-navbar>
 </ion-header>
@@ -19,27 +19,76 @@
     <button ion-button (click)="cerrarSesion()">Cerrar Sesión</butto--n>
   
   <Useless ^^ -->
-  <div *ngIf="userAvatarPicture[0]">
+  <div *ngIf="mostrarListado==false">
     <!--Loop trough picture array here we use preserveSnapshot:true but I think we can also use async pipe with FirebaseListObservable-->
-   <ion-list>
+  <ion-list>
+    
       <ion-spinner></ion-spinner>
       <ion-item *ngFor="let picture of userAvatarPicture;let i = index;">   
-          <!--p [hidden]='i+1'></p>
-          <div *ngIf="i % 2 >0">
-        {{picture}}
-          </div-->
-          Fecha: {{picture.fecha}}
+       
+          {{ 'Fecha' | translate }} : {{picture.fecha}}
           <br/>
-         Aula {{picture.aula}} - 
-         Materia {{picture.materia}} -
-         Division {{picture.division}}
+         {{ 'Aula' | translate }}  {{picture.aula}} - 
+         {{ 'Materia' | translate }}  {{picture.materia}} -
+         {{ 'Division' | translate }}  {{picture.division}}
          
          <br><br>
         <img src="{{picture.foto}}" />
+        <button 
+        ion-button 
+        (click)="VerAlumnos(picture.fecha,picture.aula,picture.materia,picture.division)" 
+        type="submit" 
+        color="primary" 
+        block
+    >
+      {{ 'Ver Listado de Alumnos presentes' | translate }} 
+     </button> 
   
       </ion-item>
-  </ion-list>
-    
-
+  
+</ion-list>
   </div>
+  <div *ngIf="mostrarListado">
+      <!--Loop trough picture array here we use preserveSnapshot:true but I think we can also use async pipe with FirebaseListObservable-->
+     <ion-list>
+     
+        <ion-spinner></ion-spinner>
+        <ion-list *ngFor="let picture of userAvatarPicture;let i = index;">   
+            <ion-item *ngIf="fechaSeleccionada==picture.fecha && divisionSeleccionada==picture.division">
+            {{ 'Fecha' | translate }} : {{picture.fecha}}
+            <br/>
+           {{ 'Aula' | translate }}  {{picture.aula}} - 
+           {{ 'Materia' | translate }}  {{picture.materia}} -
+           {{ 'Division' | translate }}  {{picture.division}}
+           
+           <br><br>
+          <img src="{{picture.foto}}" />
+            
+        </ion-item>
+        </ion-list>
+        <ion-item *ngFor="let item of alumnos;let i = index;">   
+          
+            
+          {{item.legajo}} - {{item.apellido}} - {{item.nombre}} 
+         <a *ngIf="item.presente==true || item.presente=='true' "> Presente</a>
+         <a class="rojo" *ngIf="item.presente==false || item.presente=='false'"> Ausente</a>
+         <button 
+         ion-button color="dark"
+         (click)="modificar(item.legajo,item.nombre,item.apellido,item.presente)" 
+         type="submit" 
+         color="primary" 
+       
+     >
+       {{ 'Cambiar' | translate }} 
+      </button> 
+        </ion-item>
+    </ion-list>
+      
+    </div>
+
+
+
+
+
+
 </ion-content>

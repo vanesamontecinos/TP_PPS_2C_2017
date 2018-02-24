@@ -2,7 +2,7 @@
 <ion-header>
     
       <ion-navbar>
-        <ion-title>Crear Encuesta</ion-title>
+        <ion-title> {{ 'Cargar Encuesta' | translate }}  </ion-title>
       </ion-navbar>
     
     </ion-header>
@@ -15,7 +15,7 @@
       <div *ngIf="mostrarForm">
         <form [formGroup]="form" padding>
             <p></p>
-            <h2 class="royal"> Titulo de la Encuesta</h2> 
+            <h2 class="royal">  {{ 'Titulo de la Encuesta' | translate }}  </h2> 
 
         
             <ion-item>
@@ -28,7 +28,7 @@
               >
               </ion-input>
             </ion-item>
-            <h2 class="royal"> Cargar Pregunta</h2> 
+            <h2 class="royal"> {{ 'Cargar Pregunta' | translate }}  </h2> 
             <ion-item>
                 
           
@@ -41,10 +41,10 @@
             >
             </ion-input>
           </ion-item>
-          <h2 class="royal"> Fecha Finalizacion</h2> 
+          <h2 class="royal">  {{ 'Fecha de Finalizacion' | translate }}  </h2> 
           
           <ion-item>
-              <ion-label>Desde</ion-label>
+              <ion-label> {{ 'Hasta' | translate }}  </ion-label>
               <ion-datetime displayFormat="MM/DD/YYYY" min="2017-11-24" max="2020-10-31" pickerFormat="YYYY MMM DD"  formControlName="fecha"  [(ngModel)]="laencuesta.Fecha"></ion-datetime>
             </ion-item>
              
@@ -55,7 +55,7 @@
           color="primary" 
           block
       >
-        Continuar
+         {{ 'Continuar' | translate }}  
        </button>
       </form>
       </div>
@@ -64,37 +64,26 @@
 <div *ngIf="mostrarForm==false">
       
             <ion-list radio-group (ionChange)="opcionSeleccionada($event)">   
-                <!--p [hidden]='i+1'></p>
-                <div *ngIf="i % 2 >0">
-              {{picture}}
-                </div-->
                <div>
                   <p></p>
-                        <!--ion-list-header>
-                          
-                            {{i+1}}
-                            {{algo.nombre}}
-                          </ion-list-header-->
-                        <h2 class="royal"> Seleccione posibles respuestas</h2> 
+                      
+                        <h2 class="royal">  {{ 'Seleccione posibles respuestas' | translate }}  </h2> 
                         <ion-item>
                           
-                            <ion-label>Muy Bueno / Bueno / Regular / Malo</ion-label>
+                            <ion-label> {{ 'Muy Bueno / Bueno / Regular / Malo' | translate }}  </ion-label>
                             <!--ion-checkbox color="dark"  (ionChange)="datachanged($event)" ></ion-checkbox-->
                     <ion-radio  value="uno"></ion-radio>
                   </ion-item>
                     <ion-item>
-                        <ion-label>Si / No / Puede ser</ion-label>
+                        <ion-label> {{ 'Si / No / Puede Ser' | translate }}  </ion-label>
                     <ion-radio  value="dos"></ion-radio>
                   </ion-item>
                   <ion-item>
-                      <ion-label>[texto]</ion-label>
+                      <ion-label> {{ '[texto]' | translate }}  </ion-label>
                   <ion-radio  value="tres"></ion-radio>
                 </ion-item>
                 </div>
 
-                <!--ion-checkbox [(ngModel)]="presente" (ionChange)="AgregarPresente()"></ion-checkbox>
-        
-            </ion-item-->
           </ion-list>
       
           <!--button 

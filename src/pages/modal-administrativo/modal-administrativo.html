@@ -7,7 +7,7 @@
 <ion-header>
     
       <ion-navbar>
-        <ion-title><span *ngIf="nuevo">Nuevo Administrativo</span><span *ngIf="!nuevo">Modificar {{administrativo.nombre}}</span></ion-title>
+        <ion-title><span *ngIf="nuevo">  {{ 'Nuevo Administrativo' | translate }}</span><span *ngIf="!nuevo">  {{ 'Modificar' | translate }} {{administrativo.nombre}}</span></ion-title>
       </ion-navbar>
     
     </ion-header>
@@ -16,37 +16,52 @@
     <ion-content padding>
     
         <ion-list>
-            <ion-list-header>Datos del Administrativo</ion-list-header>
+            <ion-list-header>  {{ 'Datos del Administrativo' | translate }}</ion-list-header>
               <ion-item>
-                <ion-label floating>Nombre</ion-label>
+                <ion-label floating>  {{ 'Nombre' | translate }}</ion-label>
                 <ion-input [(ngModel)]="administrativo.nombre" type="text"></ion-input>
               </ion-item>
             
               <ion-item>
-                <ion-label floating>Apellido</ion-label>
+                <ion-label floating>  {{ 'Apellido' | translate }}</ion-label>
                 <ion-input [(ngModel)]="administrativo.apellido" type="text"></ion-input>
+              </ion-item>
+
+              <ion-item>
+                  <ion-label floating>  {{ 'Legajo' | translate }}</ion-label>
+                  <ion-input [(ngModel)]="administrativo.legajo" type="text"></ion-input>
+                </ion-item>
+
+              <ion-item>
+                    <ion-label floating>  {{ 'Dirección' | translate }}</ion-label>
+                    <ion-input [(ngModel)]="administrativo.direccion" type="text"></ion-input>
               </ion-item>
 
               <ion-list radio-group [(ngModel)]="administrativo.turno">
                   <ion-list-header>
-                    Turno
+                      {{ 'Turno' | translate }}
                   </ion-list-header>
                 
                   <ion-item>
-                    <ion-label>Mañana</ion-label>
+                    <ion-label>  {{ 'Mañana' | translate }}</ion-label>
                     <ion-radio checked="true" value="mañana"></ion-radio>
                   </ion-item>
                 
                   <ion-item>
-                    <ion-label>Tarde</ion-label>
+                    <ion-label>  {{ 'Tarde' | translate }}</ion-label>
                     <ion-radio value="tarde"></ion-radio>
                   </ion-item>
                 </ion-list>
 
+                <ion-item>
+                    <ion-label floating>  {{ 'Cargo' | translate }}</ion-label>
+                    <ion-input [(ngModel)]="administrativo.cargo" type="text"></ion-input>
+                  </ion-item>
+
         </ion-list>
     
-            <button ion-button round outline color="secondary" (click)="Aceptar()">Confirmar</button>
-            <button ion-button round outline color="danger" (click)="Cerrar()">Cancelar</button>
+            <button ion-button round outline color="secondary" (click)="Aceptar()">  {{ 'Confirmar' | translate }}</button>
+            <button ion-button round outline color="danger" (click)="Cerrar()">  {{ 'Cancelar' | translate }}</button>
     
     </ion-content>
     

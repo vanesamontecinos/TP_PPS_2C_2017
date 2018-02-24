@@ -10,7 +10,7 @@ import { LoginPage } from '../pages/login/login';
 import { BotonesPage } from '../pages/botones/botones';
 
 import { AuthProvider } from '../providers/auth/auth';
-
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   templateUrl: 'app.html'
@@ -21,7 +21,7 @@ export class MyApp {
 
   constructor(
     
-    platform: Platform, 
+    platform: Platform, translate: TranslateService,
    
     private auth: AuthProvider
   
@@ -33,6 +33,7 @@ export class MyApp {
       this.auth.Session.subscribe(session=>{
         if(session){
             this.rootPage = BotonesPage;
+            translate.setDefaultLang('es');
         }
           else{
             this.rootPage = LoginPage;

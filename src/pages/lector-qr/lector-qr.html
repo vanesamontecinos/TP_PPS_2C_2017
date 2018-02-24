@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar >
-    <ion-title>Lector QR</ion-title>
+    <ion-title>  {{ 'Lector QR' | translate }} </ion-title>
     <ion-buttons end>
         <button ion-button style="color: red;" (click)="logout()"><ion-icon name="exit"></ion-icon></button>
     </ion-buttons>
@@ -10,7 +10,7 @@
 <ion-content padding>
   <div style="width:12em; margin: 0 auto">
     <button ion-button large round outline (click)="leerCodigo()">
-      Escanear codigo <br>
+         {{ 'Escanear Codigo' | translate }} <br>
       <ion-icon name="qr-scanner"></ion-icon>
     </button>
   </div>

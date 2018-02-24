@@ -1,7 +1,7 @@
 <ion-header>
     <ion-navbar>
       <ion-title>
-        Lista de alumnos 
+        {{ 'LISTADO DE ALUMNOS' | translate }}
       </ion-title>
       <ion-buttons end>
         <button ion-button icon-only (click)="downloadCSV()">
@@ -39,10 +39,10 @@
 <div class="fondo" *ngIf="mostrarBotones==false">
     <ion-scroll scrollX="true" scrollY="true" class="data-scroll">
       <table border="1" class="data-table fondo">
-          <th>Legajo</th>
-          <th>Apellido</th>
-          <th>Nombre</th>
-          <th>Horario</th>
+          <th>{{ 'Legajo' | translate }}</th>
+          <th>{{ 'Apellido' | translate }}</th>
+          <th>{{ 'Nombre' | translate }}</th>
+          <th>{{ 'Horario' | translate }}</th>
         <tr *ngFor="let row of csvData; let i = index">
           <td *ngFor="let data of row; let j = index; trackBy: trackByFn">
             <ion-input type="text" [(ngModel)]="csvData[i][j]"></ion-input>

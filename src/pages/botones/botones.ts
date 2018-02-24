@@ -10,12 +10,17 @@ import { RealizarEncuestaPage } from '../realizar-encuesta/realizar-encuesta';
 import { ListadoAlumnosPage } from '../listado-alumnos/listado-alumnos';
 import { EstadisticasPage } from '../estadisticas/estadisticas';
 import { GraficoFaltasPage } from '../grafico-faltas/grafico-faltas';
-
+import { ListadoPage } from '../listado/listado';
 import { IonicPage,NavController, NavParams,AlertController } from 'ionic-angular';
 import { AuthService } from '../../services/auth.service';
 import { ModalAlumnoPage } from '../modal-alumno/modal-alumno';
 import { ModalProfesorPage } from '../modal-profesor/modal-profesor';
 import { ModalAdministrativoPage } from '../modal-administrativo/modal-administrativo';
+import { EncuestasPage } from '../encuestas/encuestas';
+import { PagesGpsPage } from '../pages-gps/pages-gps';
+
+import { TranslateService } from '@ngx-translate/core';
+
 //$IMPORTSTATEMENT
 
 /**
@@ -31,16 +36,57 @@ import { ModalAdministrativoPage } from '../modal-administrativo/modal-administr
 })
 export class BotonesPage {
 usuario:string;
-  constructor(public navCtrl: NavController, public navParams: NavParams,
+idioms: any[] = [];
+
+
+//audio=new Audio();
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, private translateService: TranslateService,
     public auth : AuthProvider) {
+      
+    this.idioms = [
+      {
+        value: 'es',
+        label: 'Español'
+      },
+      {
+        value: 'en',
+        label: 'Ingles'
+      },
+      {
+        value: 'fr',
+        label: 'Frances'
+      },
+      {
+        value: 'ru',
+        label: 'Ruso'
+      },
+      {
+        value: 'pt',
+        label: 'Portugués'
+      },
+      {
+        value: 'al',
+        label: 'Aleman'
+      }
+    ];
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad BotonesPage');
     this.usuario=this.auth.getUser();
+    /*this.audio.src = "../../assets/blop.mp3";
+    this.audio.load();
+    this.audio.play();*/
   }
+
+  choose(lang) {
+    this.translateService.use(lang);
+  }
+
   ingresar(dato:any){
     console.log(dato);
+    //this.audio.play();
    switch (dato) {
     case "MiPerfil":
       this.navCtrl.push(MiPerfilPage);
@@ -51,6 +97,9 @@ usuario:string;
     case "Listado_Fotos":
         this.navCtrl.push(HomePage);
           break;
+          case "Listado":
+          this.navCtrl.push(ListadoPage);
+            break;
   case "LectorQR":
       this.navCtrl.push(LectorQrPage);
         break;
@@ -69,6 +118,9 @@ usuario:string;
     case "RealizarEncuesta":
           this.navCtrl.push(RealizarEncuestaPage);
             break;
+    case "Encuestas":
+            this.navCtrl.push(EncuestasPage);
+              break;        
     case "CrearEncuesta":
         this.navCtrl.push(CrearEncuestaPage);
           break;
@@ -78,8 +130,20 @@ usuario:string;
       case "CargarProfesor":
           this.navCtrl.push(ModalProfesorPage);
             break;
+      case "GPS":
+            this.navCtrl.push(PagesGpsPage);
+              break;
        case "CargarAdministrativo":
             this.navCtrl.push(ModalAdministrativoPage);
+              break;
+              case "ListadoAdministrativos":
+              this.navCtrl.push(ListadoPage, {tipo: "Administrativos"})
+              break;
+            case "ListadoProfesores":
+              this.navCtrl.push(ListadoPage, {tipo: "Profesores"})
+              break;
+            case "ListadoAlumnos":
+              this.navCtrl.push(ListadoPage, {tipo: "Alumnos"})
               break;
 
   }
@@ -88,4 +152,8 @@ usuario:string;
   cerrarSesion(){
     this.auth.logout();
 }
+
+
+
+
 }

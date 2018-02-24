@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>TomarLista</ion-title>
+    <ion-title>{{ 'Tomar Lista' | translate }}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -22,7 +22,7 @@
   type="submit" 
   color="primary" 
   block>
-Aula 310
+  {{ 'Aula' | translate }} 310 
 </button> 
 <button 
 ion-button 
@@ -30,7 +30,7 @@ ion-button
 type="submit" 
 color="primary" 
 block>
-Aula 305
+{{ 'Aula' | translate }} 305 
 </button> 
 <!--button 
 ion-button 
@@ -124,7 +124,7 @@ Division
 
 
 <ion-list>
-    <div>  <h1 class="colorBlanco">LISTADO DE ALUMNOS</h1></div>
+    <div>  <h1 class="colorBlanco">{{ 'LISTADO DE ALUMNOS' | translate }}</h1></div>
     <ion-item *ngFor="let student of listaEstudiantes2;let i = index;">
       <ion-label text-wrap >{{student.lastname}} , {{student.firstname}}</ion-label>
       <ion-checkbox color="dark" [(ngModel)]="student.present"></ion-checkbox>
@@ -132,11 +132,11 @@ Division
   
   </ion-list>
   <button ion-button icon-right color="dark" (click)="changePicture()">
-      Tomar Foto
+       {{ 'Tomar Foto' | translate }}
       <ion-icon name="images"></ion-icon>
     </button>
   <button ion-button  color="secondary" (click)="GuardarPresente2(listaEstudiantes2)" [disabled]="noStudents">
-      Guardar</button>
+       {{ 'Guardar' | translate }}</button>
 </div>
 
   </ion-content>

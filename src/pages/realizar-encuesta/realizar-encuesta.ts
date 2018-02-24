@@ -33,6 +33,7 @@ export class RealizarEncuestaPage {
   fechastring:string;
   date:string;
   respuestaTexto:string='';
+  id:string='';
 
 
 
@@ -58,7 +59,7 @@ export class RealizarEncuestaPage {
     console.log('ionViewDidLoad RealizarEncuestaPage');
   }
   ObtenerLista() {
-    this.afDB.list('Cuestionarios/', { preserveSnapshot: true }).subscribe((snapshots: any) => {
+    this.afDB.list('encuestas/', { preserveSnapshot: true }).subscribe((snapshots: any) => {
       snapshots.forEach((snapshot, index) => {
         this.unaLista[index] = snapshot.val();
       });
@@ -76,8 +77,10 @@ export class RealizarEncuestaPage {
   alert.present();
 
     //this.Unalista=this.afDB.list('Respuestas/'+this.tituloSeleccionado+'/'+this.respuesta);
-    this.Unalista=this.afDB.list('Respuestas/'+this.tituloSeleccionado);
-    this.Unalista.push({res:this.respuesta});
+  //  this.Unalista=this.afDB.list('Respuestas/'+this.tituloSeleccionado);
+   // this.Unalista.push({res:this.respuesta});
+   this.Unalista=this.afDB.list('encuestasRespuesta/'+this.id);
+   this.Unalista.push({res:this.respuesta,alumno:this.auth.getUser()});
     this.navCtrl.push(BotonesPage);
   }
   EnviarRespuesta(){
@@ -87,8 +90,9 @@ export class RealizarEncuestaPage {
 
     //this.Unalista=this.afDB.list('Respuestas/'+this.tituloSeleccionado+'/'+this.respuesta);
     if (this.respuestaTexto!=''){
-      this.Unalista=this.afDB.list('Respuestas/'+this.tituloSeleccionado);
-      this.Unalista.push({res:this.respuestaTexto});
+      //this.Unalista=this.afDB.list('Respuestas/'+this.tituloSeleccionado);
+      this.Unalista=this.afDB.list('encuestasRespuesta/'+this.id);
+      this.Unalista.push({res:this.respuestaTexto,alumno:this.auth.getUser()});
       let alert = this.alertCtrl.create({
         title: 'Encuesta Terminada!',
         subTitle: 'Se envio la respuesta correctamente!',
@@ -110,12 +114,13 @@ export class RealizarEncuestaPage {
 
 
 
-  Seleccionar(titulo:string,pregunta:string,opcion:string){
+  Seleccionar(titulo:string,pregunta:string,opcion:string,key:string){
 this.tituloSeleccionado=titulo;
 console.log(pregunta);
 console.log(titulo);
 this.preguntaSeleccionada=pregunta;
 this.opcionSeleccionada=opcion;
+this.id=key;
 this.mostrarTodas=false;
 
 this.mostrarEncuesta=true;

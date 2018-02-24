@@ -8,6 +8,22 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { Usuario } from '../../clases/usuario';
 import firebase from "firebase";
 
+import {
+  GoogleMaps,
+  GoogleMap,
+  GoogleMapsEvent,
+  GoogleMapOptions,
+  CameraPosition,
+  LatLng,
+  MarkerOptions,
+  Marker
+} from '@ionic-native/google-maps';
+import { Geolocation, Geoposition } from '@ionic-native/geolocation';
+import { ToastController } from 'ionic-angular';
+import { NativeGeocoder, NativeGeocoderReverseResult,
+  NativeGeocoderForwardResult } from '@ionic-native/native-geocoder';
+  import { TranslateService } from '@ngx-translate/core';
+
 /**
  * Generated class for the LoginPage page.
  *
@@ -22,6 +38,7 @@ import firebase from "firebase";
 })
 export class LoginPage {
 
+  miUbicacion:any;
   user= { email : '', password : ''};
   private provider = {
     mail: '',
@@ -29,16 +46,97 @@ export class LoginPage {
     foto:'',
     loggedin:false
   }
+  LatLng: any;
+  
+  pais:string;
+  idioms: any[] = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams,public auth1 : AuthProvider,
     public alertCtrl : AlertController,
-    public auth:AngularFireAuth ) {
+    public auth:AngularFireAuth,
+    private geolocation: Geolocation,
+    public nativeGeocoder: NativeGeocoder,
+    private translateService: TranslateService,
+  public toaster: ToastController ) {
   
+    this.idioms = [
+      {
+        value: 'es',
+        label: 'Español'
+      },
+      {
+        value: 'en',
+        label: 'Ingles'
+      },
+      {
+        value: 'fr',
+        label: 'Frances'
+      },
+      {
+        value: 'ru',
+        label: 'Ruso'
+      },
+      {
+        value: 'pt',
+        label: 'Portugués'
+      },
+      {
+        value: 'al',
+        label: 'Aleman'
+      }
+    ];
+     
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
-  }
+   this.ObtenerUbicacion();
+
+}
+choose(lang) {
+  this.translateService.use(lang);
+}
+ObtenerUbicacion(){
+
+  
+      this.geolocation.getCurrentPosition().then((geposition: Geoposition) => {
+        //console.log(geposition);
+    
+      this.nativeGeocoder.reverseGeocode(geposition.coords.latitude, geposition.coords.longitude)
+      .then((result: NativeGeocoderReverseResult) => {
+      this.miUbicacion= result[0].countryName+","+result[0].administrativeArea+","+result[0].locality+","+result[0].thoroughfare+","+result[0].subThoroughfare;
+      this.pais= result[0].countryName;
+      //alert(this.pais);
+      switch (this.pais) {
+        case "Argentina":
+        this.translateService.use('es');
+            break;
+        case "Rusia":
+            this.translateService.use('ru');
+                break;
+        case "Francia":
+                this.translateService.use('fr');
+                    break; 
+                    case "Brasil":
+                    this.translateService.use('pt');
+                        break;                
+      }
+
+       let country =this.toaster.create({
+      message:'Estas en ' +result[0].countryName,
+      duration:6000
+    });
+    country.present();
+    
+    }
+    )
+      .catch((error: any) => console.log(error));
+  });
+    
+  
+  
+    }
+  
 
   signin(){
     this.auth1.registerUser(this.user.email,this.user.password)
@@ -71,19 +169,7 @@ export class LoginPage {
         alert.present();
       })
     }
-    public loginGitHub():any{
-      let proveedor = new firebase.auth.GithubAuthProvider();
-  
-      this.auth.auth.signInWithRedirect(proveedor).then(res =>{
-        console.log('res: '+ JSON.stringify(res));
-        /*this.provider.loggedin = true;
-        this.provider.mail = res.user.email;
-        this.provider.foto = res.user.photoURL;
-        this.provider.nombre = res.user.displayName;*/
-        return this.provider;
-      });
-  
-    }
+   
     administrador(){
       this.user.email='admin@admin.com';
       this.user.password='111111';

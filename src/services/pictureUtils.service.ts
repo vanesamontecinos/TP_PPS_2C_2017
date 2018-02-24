@@ -101,7 +101,7 @@ export class PictureUtils {
     
       this.lista.push({
         foto:this.objectToSave,
-        aula:"Aula "+NroDeAula,
+        aula:NroDeAula,
         fecha:dale,
         materia:mat,
         division:div

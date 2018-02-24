@@ -12,6 +12,7 @@ import { Survey } from "../../app/entities/survey";
 import {Option} from "../../app/entities/option";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Encuesta } from "../../app/clases/encuesta";
+import * as firebase from 'firebase';
 
 /**
  * Generated class for the CrearEncuestaPage page.
@@ -83,10 +84,35 @@ this.laencuesta=new Encuesta();
     console.log(this.pregunta);
     console.log(this.opcion);
 
-    this.Unalista=this.afDB.list('Cuestionarios');
-    this.Unalista.push({titulo:this.form.value.titulo,pregunta:this.form.value.pregunta,fecha:this.form.value.fecha,opcion:this.opcion});
+    var newPostKey = firebase.database().ref().child('encuestas').push().key;
+    var postData = {titulo:this.form.value.titulo,
+      pregunta:this.form.value.pregunta,
+      fecha:this.form.value.fecha,
+      opcion:this.opcion,
+      key:newPostKey,
+      activa:true,
+      eliminada:false
+      
+    };
+
+   
+  
+    // Write the new post's data simultaneously in the posts list and the user's post list.
+    var updates = {};
+    updates['/encuestas/' + newPostKey] = postData;
+   // updates['/respuestaEncuestas/' + newPostKey] = postData;
+  
+     firebase.database().ref().update(updates);
+
+   // this.Unalista=this.afDB.list('Cuestionarios');
+    //this.Unalista.push({titulo:this.form.value.titulo,pregunta:this.form.value.pregunta,fecha:this.form.value.fecha,opcion:this.opcion});
    // this.Unalista=this.afDB.list('Respuestas/'+this.tituloSeleccionado+'/total');
     //this.Unalista.push(1);
+
+
+
+
+
     let alert = this.alertCtrl.create({
       title: 'Felicitaciones',
       subTitle: 'La encuesta ha sido guardada con exito!',
